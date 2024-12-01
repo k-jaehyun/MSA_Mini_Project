@@ -1,8 +1,11 @@
 package com.sparta.msa_exam.product.products;
 
 import com.sparta.msa_exam.product.core.Product;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,7 +27,13 @@ public class ProductService {
   }
 
 
-  public List<ProductResponseDto> getProductList() {
-    return productRepository.findAll().stream().map(ProductResponseDto::new).toList();
+  public Page<ProductResponseDto> getProducts(int size, String keyword, String sortBy,
+      Direction direction, Integer page) {
+
+    Pageable pageable = PageRequest.of(page, size, direction, sortBy);
+
+    Page<Product> pagedProduct = productRepository.searchProducts(keyword, pageable);
+
+    return pagedProduct.map(ProductResponseDto::new);
   }
 }
