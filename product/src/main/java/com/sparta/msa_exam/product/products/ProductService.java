@@ -36,4 +36,8 @@ public class ProductService {
 
     return pagedProduct.map(ProductResponseDto::new);
   }
+
+  public Boolean checkProductIsPresent(Long productId) {
+    return productRepository.findByIdAndReturnBoolean(productId);
+  }
 }
