@@ -1,0 +1,29 @@
+server:
+  port: 19093
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:test;
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    defer-datasource-initialization: true
+    show-sql: true
+
+  sql:
+    init:
+      mode: always
+
+
+management:
+  zipkin:
+    tracing:
+      endpoint: "http://localhost:9411/api/v2/spans"  # Zipkin 서버의 엔드포인트 지정
+  tracing:
+    sampling:
+      probability: 1.0  # Zipkin 트레이싱 샘플링 비율 (1.0: 100%)
+  endpoints:
+    web:
+      exposure:
+        include: refresh  # [Post] /actuator/refresh 엔드포인트 노출 (config server 변경사항 수동 갱신)

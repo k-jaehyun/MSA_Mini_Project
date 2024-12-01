@@ -36,11 +36,9 @@ dependencies {
 	// JWT
 	implementation 'io.jsonwebtoken:jjwt:0.12.6'
 
-	// Gateway
-	implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
-
-	// Reactor (Spring WebFlux의 리액티브 프로그래밍 라이브러리)
-	testImplementation 'io.projectreactor:reactor-test'
+	// spring security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	testImplementation 'org.springframework.security:spring-security-test'
 
 	// Eureka client
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
@@ -70,6 +68,7 @@ dependencies {
 
 	// 인메모리 H2
 	runtimeOnly 'com.h2database:h2'
+
 
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
