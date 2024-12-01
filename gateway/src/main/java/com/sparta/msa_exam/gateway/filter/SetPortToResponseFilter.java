@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @WebFilter("/*") // 모든 요청에 대해 필터를 적용
-public class ServerPortFilter implements Filter {
+public class SetPortToResponseFilter implements Filter {
 
   @Value("${server.port}")
   private String serverPort;
@@ -23,7 +23,7 @@ public class ServerPortFilter implements Filter {
       throws IOException, ServletException {
 
     HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-    httpServletResponse.setHeader("Server Port", serverPort); // 헤더에 서버 포트 추가
+    httpServletResponse.setHeader("Server-Port", serverPort); // 헤더에 서버 포트 추가
 
     chain.doFilter(request, response);
   }
