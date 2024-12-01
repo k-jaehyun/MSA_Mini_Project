@@ -1,5 +1,7 @@
 package com.sparta.msa_exam.auth.auths;
 
+import com.sparta.msa_exam.auth.jwt.JwtUtil;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
   private final AuthService authService;
+  private final JwtUtil jwtUtil;
 
   @PostMapping("/sign-up")
   public ResponseEntity signUp(@RequestBody SignUpRequestDto signUpRequestDto) {
@@ -20,6 +23,20 @@ public class AuthController {
     SignUpResponseDto signUpResponseDto = authService.signUp(signUpRequestDto);
 
     return ResponseEntity.ok(signUpResponseDto);
+  }
+
+  @PostMapping("/sign-in")
+  public ResponseEntity signIn(
+      @RequestBody SignInRequestDto signInRequestDto,
+      HttpServletResponse response) {
+
+    SignInResponseDto signInResponseDto = authService.signIn(signInRequestDto);
+
+    // 토큰 생성 및 발급
+    String token = jwtUtil.createToken(signInResponseDto.getUsername());
+    jwtUtil.addJwtToCookie(token, response);
+
+    return ResponseEntity.ok(signInResponseDto);
   }
 
 }

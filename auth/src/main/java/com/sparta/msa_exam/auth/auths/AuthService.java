@@ -25,4 +25,21 @@ public class AuthService {
 
     return new SignUpResponseDto(user);
   }
+
+  public SignInResponseDto signIn(SignInRequestDto signInRequestDto) {
+
+    String username = signInRequestDto.getUsername();
+    String password = signInRequestDto.getPassword();
+
+    User user = userRepository.findUserByUsername(username)
+        .orElseThrow(
+            () -> new IllegalArgumentException(username + " : 존재하지 않는 username입니다.")
+        );
+
+    if (!passwordEncoder.matches(password, user.getPassword())) {
+      throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+    }
+
+    return new SignInResponseDto(user);
+  }
 }

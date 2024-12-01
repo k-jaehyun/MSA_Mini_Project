@@ -8,14 +8,14 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignUpResponseDto {
+public class SignInResponseDto {
 
-  private Long id;
+  private Long userId;
 
   private String username;
 
-  public SignUpResponseDto(User user) {
-    this.id = user.getId();
+  public SignInResponseDto(User user) {
+    this.userId = user.getId();
     this.username = user.getUsername();
   }
 }
