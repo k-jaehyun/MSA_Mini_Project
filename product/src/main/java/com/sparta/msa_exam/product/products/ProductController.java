@@ -1,7 +1,9 @@
 package com.sparta.msa_exam.product.products;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,5 +25,14 @@ public class ProductController {
 
     return ResponseEntity.ok(productResponseDto);
   }
+
+  @GetMapping
+  ResponseEntity getProductList() {
+
+    List<ProductResponseDto> productResponseDtoList = productService.getProductList();
+
+    return ResponseEntity.ok(productResponseDtoList);
+  }
+
 
 }

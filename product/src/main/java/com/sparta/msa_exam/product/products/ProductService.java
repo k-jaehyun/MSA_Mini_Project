@@ -1,6 +1,7 @@
 package com.sparta.msa_exam.product.products;
 
 import com.sparta.msa_exam.product.core.Product;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,4 +24,7 @@ public class ProductService {
   }
 
 
+  public List<ProductResponseDto> getProductList() {
+    return productRepository.findAll().stream().map(ProductResponseDto::new).toList();
+  }
 }
