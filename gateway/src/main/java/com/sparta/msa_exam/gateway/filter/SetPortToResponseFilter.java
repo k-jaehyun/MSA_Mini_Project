@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-@WebFilter("/*") // 모든 요청에 대해 필터를 적용
+@WebFilter(value = "/*", asyncSupported = true) // 모든 요청에 대해 필터를 적용 + 비동기적으로 필터 실행
 public class SetPortToResponseFilter implements Filter {
 
   @Value("${server.port}")
