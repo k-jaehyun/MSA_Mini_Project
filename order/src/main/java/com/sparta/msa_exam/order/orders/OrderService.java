@@ -46,8 +46,7 @@ public class OrderService {
 
   public OrderResponseDto addProductToOrder(Long orderId, OrderRequestDto orderRequestDto) {
 
-    Order order = orderRepository.findById(orderId)
-        .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 orderId입니다."));
+    Order order = orderRepository.findByIdOrElseThrow(orderId);
 
     List<Long> productIdList = orderRequestDto.getProductIds();
 
@@ -57,6 +56,13 @@ public class OrderService {
 
     order.getProductIdList().addAll(productIdList);
     orderRepository.save(order);
+
+    return new OrderResponseDto(order);
+  }
+
+  public OrderResponseDto getOrder(Long orderId) {
+
+    Order order = orderRepository.findByIdOrElseThrow(orderId);
 
     return new OrderResponseDto(order);
   }
