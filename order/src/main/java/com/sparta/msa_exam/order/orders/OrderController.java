@@ -1,6 +1,7 @@
 package com.sparta.msa_exam.order.orders;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,11 @@ public class OrderController {
 
     OrderResponseDto orderResponseDto = orderService.createOrder(orderRequestDto);
 
-    return ResponseEntity.ok(orderResponseDto);
+    if (orderResponseDto.getMessage() == null) {
+      return ResponseEntity.ok(orderResponseDto);
+    } else {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(orderResponseDto);
+    }
   }
 
 }
