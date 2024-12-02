@@ -13,11 +13,19 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderResponseDto {
 
+  private Long orderId;
+
   private List<Long> productIdList;
 
   private String message;
 
   public OrderResponseDto(Order order) {
+    this.orderId = order.getOrderId();
     this.productIdList = order.getProductIdList();
+  }
+
+  public OrderResponseDto(List<Long> productIds, String message) {
+    this.productIdList = productIds;
+    this.message = message;
   }
 }

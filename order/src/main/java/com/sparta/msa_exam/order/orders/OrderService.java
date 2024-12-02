@@ -44,4 +44,20 @@ public class OrderService {
         ));
   }
 
+  public OrderResponseDto addProductToOrder(Long orderId, OrderRequestDto orderRequestDto) {
+
+    Order order = orderRepository.findById(orderId)
+        .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 orderId입니다."));
+
+    List<Long> productIdList = orderRequestDto.getProductIds();
+
+    if (productIdList.isEmpty()) {
+      throw new IllegalArgumentException("상품 ID 리스트가 비어 있습니다.");
+    }
+
+    order.getProductIdList().addAll(productIdList);
+    orderRepository.save(order);
+
+    return new OrderResponseDto(order);
+  }
 }
