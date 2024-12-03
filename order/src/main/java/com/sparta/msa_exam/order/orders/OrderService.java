@@ -5,6 +5,7 @@ import com.sparta.msa_exam.order.core.Order;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -60,6 +61,7 @@ public class OrderService {
     return new OrderResponseDto(order);
   }
 
+  @Cacheable(cacheNames = "orderCache", key = "args[0]")
   public OrderResponseDto getOrder(Long orderId) {
 
     Order order = orderRepository.findByIdOrElseThrow(orderId);
