@@ -26,7 +26,7 @@
   - **외부요청 보호**: Oauth2,JWT 기반으로 인증/인가를 구성하여 인가 없이 `상품 서비스`, `주문 서비스`를 호출할 때
           **401** HTTP ****Status Code를 응답하도록 설정해주세요.
       <br></br>
-- Weighted Load Balancing : Ribbon 옵션 설정으로 구현 할 수 있을 것으로 예상했으나 구현하지 못했음.
+- Weighted Load Balancing : Ribbon 옵션 설정으로 구현 할 수 있을 것으로 예상했으나 찾지 못하고 gateway filter로 구현.
 
 # 개선 여지
 
