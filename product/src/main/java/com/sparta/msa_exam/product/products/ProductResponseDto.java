@@ -1,6 +1,7 @@
 package com.sparta.msa_exam.product.products;
 
 import com.sparta.msa_exam.product.core.Product;
+import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductResponseDto {
+public class ProductResponseDto implements Serializable {
+  private static final long serialVersionUID = 1L;
 
   private Long productId;
 
