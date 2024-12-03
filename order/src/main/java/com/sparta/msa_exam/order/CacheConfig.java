@@ -24,12 +24,14 @@ public class CacheConfig {
       RedisConnectionFactory redisConnectionFactory  // jedis 의존성 추가해줘야 인식됨
   ) {
 
-    RedisCacheConfiguration configuration = getOrderCacheConfiguration();
+    RedisCacheConfiguration getOrderConfiguration = getOrderCacheConfiguration();
+    RedisCacheConfiguration checkProductConfiguration = getCheckProductConfiguration();
 
     return RedisCacheManager
         .builder(redisConnectionFactory)
-//        .cacheDefaults()  // 기본 설정 제외
-        .withCacheConfiguration("orderCache", configuration) // orderCache 만 활성화
+//        .cacheDefaults(configuration)  // 기본 설정 제외
+        .withCacheConfiguration("orderCache", getOrderConfiguration) // orderCache 만 활성화
+        .withCacheConfiguration("checkProductIsPresent", getCheckProductConfiguration())
         .build();
   }
 
@@ -46,6 +48,24 @@ public class CacheConfig {
         .serializeValuesWith(
             RedisSerializationContext.SerializationPair.fromSerializer(
                 new Jackson2JsonRedisSerializer<>(OrderResponseDto.class)
+            )
+        );
+  }
+
+
+  private RedisCacheConfiguration getCheckProductConfiguration() {
+    return RedisCacheConfiguration
+        .defaultCacheConfig()    // default를 사용하여 대부분 기본 설정
+        // null을 캐싱 할것인지
+        .disableCachingNullValues()
+        // 기본 캐시 유지 시간 (Time To Live)
+        .entryTtl(Duration.ofSeconds(10))
+        // 캐시를 구분하는 접두사 설정(cache_)
+        .computePrefixWith(CacheKeyPrefix.simple())
+        // OrderResponseDto 에 대해서만 직렬화
+        .serializeValuesWith(
+            RedisSerializationContext.SerializationPair.fromSerializer(
+                new Jackson2JsonRedisSerializer<>(Boolean.class)
             )
         );
   }
