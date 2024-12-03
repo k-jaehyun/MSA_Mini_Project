@@ -3,6 +3,8 @@
 
 ![img_1.png](img_1.png)
 
+![img.png](img.png)
+
 | 서비스                   | 패키지명                          | 포트                |
 |-----------------------|-------------------------------|-------------------|
 | 유레카서버-**eureka server** | `com.sparta.msa_exam`         | `19090`           |
@@ -28,9 +30,10 @@
 
 # 개선 여지
 
-- OrderId의 productIdList를 하나씩 중간테이블로 맵핑
-  - productId가 많아질수록 SQL문 많아짐.
-  - idList를 String으로 하고 "," 로 나눠서 저장하는게 성능 면에서는 좋아보임
+- OrderService에서 productId 하나당 1개의 요청을 생성하고 있음.
+- Order 생성시 OrderId에 productIdList에서 productId 하나당 중간테이블 하나로 맵핑
+  - productIdList가 커질수록 SQL문 많아짐.
+  - 차라리 idList를 String으로 하고 "," 로 나눠서 저장하는게 성능 면에서는 좋아보임
   - 혹은 연관관계 설정.
     - 서버모드DB가 필요한 사항인듯
 
